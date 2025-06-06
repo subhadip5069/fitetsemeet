@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Fitetse Meet</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <div class="home-container">
+    <div class="card glass">
+      <h1><i class="fas fa-sign-in-alt"></i> Join a Meeting</h1>
+      <% if (error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
+      <form action="/join" method="get" class="join-form" onsubmit="return validateForm()">
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Enter your email" name="email" id="email" required oninput="validateEmail()">
+          <span class="validation-icon" id="email-icon"></span>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-key"></i>
+          <input type="text" placeholder="Enter meeting code" name="code" id="code" oninput="validateCode()">
+          <span class="validation-icon" id="code-icon"></span>
+        </div>
+        <button type="submit" class="btn primary"><i class="fas fa-sign-in-alt"></i> Join Meeting</button>
+      </form>
+      <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+  <script>
+    function validateEmail() {
+      const email = document.getElementById('email').value;
+      const icon = document.getElementById('email-icon');
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && regex.test(email)) {
+        icon.innerHTML = '<i class="fas fa-check-circle" style="color: #4caf50;"></i>';
+      } else {
+        icon.innerHTML = email ? '<i class="fas fa-times-circle" style="color: #ff4d4f;"></i>' : '';
+      }
+    }
+
+    function validateCode() {
+      const code = document.getElementById('code').value;
+      const icon = document.getElementById('code-icon');
+      const regex = /^[a-zA-Z0-9-]{6,36}$/;
+      if (code && regex.test(code)) {
+        icon.innerHTML = '<i class="fas fa-check-circle" style="color: #4caf50;"></i>';
+      } else {
+        icon.innerHTML = code ? '<i class="fas fa-times-circle" style="color: #ff4d4f;"></i>' : '';
+      }
+    }
+
+    function validateForm() {
+      const email = document.getElementById('email').value;
+      const code = document.getElementById('code').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const codeRegex = /^[a-zA-Z0-9-]{6,36}$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+      if (code && !codeRegex.test(code)) {
+        alert('Invalid meeting code. Use 6-36 alphanumeric characters or hyphens.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

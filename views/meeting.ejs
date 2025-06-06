@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitetse Meet - Meeting</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <div class="meeting-container">
+    <div class="main-video">
+      <video id="local-video" autoplay muted playsinline class="watermark"></video>
+    </div>
+    <div class="participants-sidebar">
+      <h3><i class="fas fa-users"></i> Participants</h3>
+      <div id="participants"></div>
+    </div>
+    <div class="controls">
+      <button id="video-btn" onclick="toggleVideo()" title="Toggle Video"><i class="fas fa-video"></i></button>
+      <button id="audio-btn" onclick="toggleAudio()" title="Toggle Audio"><i class="fas fa-microphone"></i></button>
+      <button onclick="rotateCamera()" title="Rotate Camera"><i class="fas fa-sync-alt"></i></button>
+      <button onclick="shareScreen()" title="Share Screen"><i class="fas fa-desktop"></i></button>
+      <button id="record-btn" onclick="toggleRecording()" title="Toggle Recording"><i class="fas fa-record-vinyl"></i></button>
+      <button onclick="hangup()" title="Hang Up"><i class="fas fa-phone-slash"></i></button>
+    </div>
+    <button class="chat-toggle-btn" onclick="toggleChat()" title="Toggle Chat"><i class="fas fa-comments"></i><span class="badge" id="chat-badge">0</span></button>
+    <div class="chat-panel" id="chat-panel">
+      <div class="chat-header">
+        <h3>Chat</h3>
+        <button onclick="toggleChat()" title="Close Chat"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="chat-container"></div>
+      <input id="chat-input" type="text" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/client.js"></script>
+  <script>
+    startMeeting('<%= roomId %>', '<%= email %>');
+  </script>
+</body>
+</html>
