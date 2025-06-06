@@ -23,7 +23,7 @@ app.get('/join', (req, res) => {
   const { email = 'guest', code } = req.query;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     console.log(`Invalid email: ${email}`);
-    return res.render('join', { error: 'Please enter a valid email.' });
+    return res.render('join', { error: 'Please enter a valid email address.' });
   }
   if (code) {
     if (!/^[a-zA-Z0-9-]{6,36}$/.test(code)) {
@@ -37,7 +37,7 @@ app.get('/join', (req, res) => {
     console.log(`User ${email} joining room: ${code}`);
     res.render('meeting', { email, roomId: code });
   } else {
-    res.render('join', { error: req.query.code ? 'Please enter a meeting code.' : '' });
+    res.render('join', { error: req.query.code ? 'Please enter a meeting code.' : null });
   }
 });
 
@@ -45,7 +45,7 @@ app.get('/join/:email/:code', (req, res) => {
   const { email, code } = req.params;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     console.log(`Invalid email: ${email}`);
-    return res.render('join', { error: 'Please enter a valid email.' });
+    return res.render('join', { error: 'Please enter a valid email address.' });
   }
   if (!/^[a-zA-Z0-9-]{6,36}$/.test(code)) {
     console.log(`Invalid meeting code: ${code}`);
